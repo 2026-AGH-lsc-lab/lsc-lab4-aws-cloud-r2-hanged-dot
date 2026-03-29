@@ -19,19 +19,18 @@ echo "Ensure Lambda has been idle for 20+ minutes before running."
 echo ""
 
 echo "--- Lambda Zip (30 sequential requests, 1/sec) ---"
-oha_lambda -n 30 -c 1 --burst-delay 1s --burst-rate 1 \
-    "${LAMBDA_ZIP_URL}/search" 2>&1 | tee "${RESULTS_DIR}/scenario-a-zip.txt"
+# oha_lambda -n 30 -c 1 --burst-delay 1s --burst-rate 1  "${LAMBDA_ZIP_URL}/search" 2>&1 | tee "${RESULTS_DIR}/scenario-a-zip.txt"
 
 echo ""
 echo "Waiting 20 minutes before container variant (for cold start reset)..."
 echo "Press Ctrl+C to skip the wait if running variants separately."
 echo "Sleeping 1200s (20 min)..."
-sleep 1200 || true
+# sleep 1200 || true
+# exit 0
 
 echo ""
 echo "--- Lambda Container (30 sequential requests, 1/sec) ---"
-oha_lambda -n 30 -c 1 --burst-delay 1s --burst-rate 1 \
-    "${LAMBDA_CONTAINER_URL}/search" 2>&1 | tee "${RESULTS_DIR}/scenario-a-container.txt"
+oha_lambda -n 30 -c 1 --burst-delay 1s --burst-rate 1 "${LAMBDA_CONTAINER_URL}/search" 2>&1 | tee "${RESULTS_DIR}/scenario-a-container.txt"
 
 echo ""
 echo "=== Scenario A complete. Results in ${RESULTS_DIR} ==="

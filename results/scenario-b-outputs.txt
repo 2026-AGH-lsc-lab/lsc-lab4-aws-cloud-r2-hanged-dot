@@ -1,0 +1,54 @@
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "79.295", "X-Instance-Id": "2026/03/29/[$LATEST]6a4e54b820204a3cbb415b4a5bc3f76c", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 83.295, \"instance_id\": \"2026/03/29/[$LATEST]6a4e54b820204a3cbb415b4a5bc3f76c\", \"cold_start\": true}"}
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "94.742", "X-Instance-Id": "2026/03/29/[$LATEST]0f7c28151b8d4849af0eb15c03b7b3f3", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 69.933, \"instance_id\": \"2026/03/29/[$LATEST]0f7c28151b8d4849af0eb15c03b7b3f3\", \"cold_start\": true}"}
+{
+  "instance_id": "ip-172-31-89-57.ec2.internal",
+  "query_time_ms": 27.816,
+  "results": [
+    {
+      "distance": 12.001459121704102,
+      "index": 35859
+    },
+    {
+      "distance": 12.059946060180664,
+      "index": 24682
+    },
+    {
+      "distance": 12.487079620361328,
+      "index": 35397
+    },
+    {
+      "distance": 12.489519119262695,
+      "index": 20160
+    },
+    {
+      "distance": 12.499402046203613,
+      "index": 30454
+    }
+  ]
+}
+{
+  "instance_id": "09c6d8049853",
+  "query_time_ms": 26.131,
+  "results": [
+    {
+      "distance": 12.001459121704102,
+      "index": 35859
+    },
+    {
+      "distance": 12.059946060180664,
+      "index": 24682
+    },
+    {
+      "distance": 12.487079620361328,
+      "index": 35397
+    },
+    {
+      "distance": 12.489519119262695,
+      "index": 20160
+    },
+    {
+      "distance": 12.499402046203613,
+      "index": 30454
+    }
+  ]
+}

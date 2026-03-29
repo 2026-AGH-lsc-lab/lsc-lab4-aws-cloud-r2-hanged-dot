@@ -1,0 +1,94 @@
+$ aws ecr describe-images --repository-name lsc-knn-app \
+    --image-ids imageTag=latest --query 'imageDetails[0].imageTags'
+# Expected: ["latest"]
+[
+    "latest"
+]
+
+
+$ # Test via CLI invoke (bypasses Function URL auth):
+aws lambda invoke --function-name lsc-knn-zip \
+    --cli-binary-format raw-in-base64-out \
+    --payload "$(python3 -c 'import json; q=json.load(open("loadtest/query.json")); print(json.dumps({"body": json.dumps(q)}))')" \
+    /tmp/out.json
+cat /tmp/out.json
+{
+    "StatusCode": 200,
+    "ExecutedVersion": "$LATEST"
+}
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "83.295", "X-Instance-Id": "2026/03/29/[$LATEST]6a4e54b820204a3cbb415b4a5bc3f76c", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 83.295, \"instance_id\": \"2026/03/29/[$LATEST]6a4e54b820204a3cbb415b4a5bc3f76c\", \"cold_start\": true}"}
+
+
+$ aws lambda invoke --function-name lsc-knn-container \
+    --cli-binary-format raw-in-base64-out \
+    --payload "$(python3 -c 'import json; q=json.load(open("loadtest/query.json")); print(json.dumps({"body": json.dumps(q)}))')" \
+    /tmp/out.json
+cat /tmp/out.json
+{
+    "StatusCode": 200,
+    "ExecutedVersion": "$LATEST"
+}
+{"statusCode": 200, "headers": {"Content-Type": "application/json", "X-Server-Time-Ms": "69.933", "X-Instance-Id": "2026/03/29/[$LATEST]0f7c28151b8d4849af0eb15c03b7b3f3", "X-Cold-Start": "true"}, "body": "{\"results\": [{\"index\": 35859, \"distance\": 12.001459121704102}, {\"index\": 24682, \"distance\": 12.059946060180664}, {\"index\": 35397, \"distance\": 12.487079620361328}, {\"index\": 20160, \"distance\": 12.489519119262695}, {\"index\": 30454, \"distance\": 12.499402046203613}], \"query_time_ms\": 69.933, \"instance_id\": \"2026/03/29/[$LATEST]0f7c28151b8d4849af0eb15c03b7b3f3\", \"cold_start\": true}"}
+
+$ curl -X POST -H "Content-Type: application/json" -d @loadtest/query.json     http://lsc-knn-alb-1694278652.us-east-1.elb.amazonaws.com/search | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  2983 100   312 100  2671  9597 82166  --:--:-- --:--:-- --:--:-- 93218
+{
+  "instance_id": "ip-172-31-89-57.ec2.internal",
+  "query_time_ms": 24.538,
+  "results": [
+    {
+      "distance": 12.001459121704102,
+      "index": 35859
+    },
+    {
+      "distance": 12.059946060180664,
+      "index": 24682
+    },
+    {
+      "distance": 12.487079620361328,
+      "index": 35397
+    },
+    {
+      "distance": 12.489519119262695,
+      "index": 20160
+    },
+    {
+      "distance": 12.499402046203613,
+      "index": 30454
+    }
+  ]
+}
+
+$ curl -X POST -H 'Content-Type: application/json' -d @loadtest/query.json http://3.236.238.9:8080/search | jq
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  2966 100   295 100  2671 10119 91620  --:--:-- --:--:-- --:--:-- 102275
+{
+  "instance_id": "09c6d8049853",
+  "query_time_ms": 24.95,
+  "results": [
+    {
+      "distance": 12.001459121704102,
+      "index": 35859
+    },
+    {
+      "distance": 12.059946060180664,
+      "index": 24682
+    },
+    {
+      "distance": 12.487079620361328,
+      "index": 35397
+    },
+    {
+      "distance": 12.489519119262695,
+      "index": 20160
+    },
+    {
+      "distance": 12.499402046203613,
+      "index": 30454
+    }
+  ]
+}
+
