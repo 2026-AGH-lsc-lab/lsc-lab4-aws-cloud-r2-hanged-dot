@@ -36,10 +36,7 @@ def calculate_monthly_requests():
 
 def calculate_lambda_cost(requests_per_month):
     """Calculate Lambda monthly cost."""
-    # Request cost
     request_cost = (requests_per_month / 1_000_000) * LAMBDA_REQUEST_COST_PER_MILLION
-    
-    # Compute cost
     duration_seconds = LAMBDA_HANDLER_DURATION_MS / 1000
     gb_seconds = requests_per_month * duration_seconds * LAMBDA_MEMORY_GB
     compute_cost = gb_seconds * LAMBDA_GB_SECOND_COST
